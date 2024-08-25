@@ -74,9 +74,9 @@ let Tupple = ({
         <div className='md:border-r '>
           <div className='text-sm text-muted-foreground '>SKILLS</div>
           <ul className='flex items-center gap-2 mt-3 '>
-            {skill?.map((s) => {
+            {skill?.map((s,index) => {
               return (
-                <li>
+                <li key={index}>
                   <Badge
                     variant='outline'
                     className={'bg-blue-50 rounded-sm font-normal'}>
@@ -91,9 +91,9 @@ let Tupple = ({
         <div className='md:border-r '>
           <div className='text-sm text-muted-foreground '>EXPERIENCE</div>
           <ul className='flex items-center gap-2 mt-3 '>
-            {experience?.map((e) => {
+            {experience?.map((e,index) => {
               return (
-                <li>
+                <li key={index}>
                   <Badge
                     variant='outline'
                     className={'bg-blue-50 rounded-sm font-normal'}>
@@ -107,9 +107,9 @@ let Tupple = ({
         <div>
           <div className='text-sm text-muted-foreground '>ASSETS & DOCS</div>
           <ul className='flex items-center gap-2 mt-3 '>
-            {assetsDcos?.map((a) => {
+            {assetsDcos?.map((a,index) => {
               return (
-                <li>
+                <li key={index}>
                   <Badge
                     variant='outline'
                     className={'bg-blue-50 rounded-sm font-normal'}>
