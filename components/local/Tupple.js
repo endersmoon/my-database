@@ -35,7 +35,7 @@ let Tupple = ({
               <User2Icon />
             </div>
             <div>
-              <div className='font-medium tetx-xl'>{name}</div>
+              <div className='text-2xl font-medium '>{name}</div>
               <div className='text-sm text-muted-foreground'>
                 {gender} · {age}
               </div>
@@ -125,10 +125,10 @@ let Tupple = ({
       <div className='flex items-center justify-between py-3 mt-3'>
         <div className='flex items-center gap-2 pl-3 md:hidden'>
           <Button variant='outline' size='icon'>
-            <PlayIcon size={16} className='mr-2' />
+            <PlayIcon size={16} className='' />
           </Button>
           <Button variant='outline' size='icon'>
-            <CalendarIcon size={16} className='mr-2' />
+            <CalendarIcon size={16} className='' />
           </Button>
         </div>
         <div className='items-center hidden gap-2 pl-3 md:flex'>

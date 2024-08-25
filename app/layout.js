@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <MinimalNavBar title={"My Database"} description={"Inside Sales Executive · Noida (UP)"} />
-        <main className='p-3 md:p-6'>{children}</main>
+        <main className=''>{children}</main>
       </body>
     </html>
   );
