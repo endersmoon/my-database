@@ -31,24 +31,24 @@ import {
 
 const frameworks = [
   {
-    value: 'next.js',
-    label: 'Next.js',
+    value: 'mayurVihar',
+    label: 'Mayur Vihar',
   },
   {
-    value: 'sveltekit',
-    label: 'SvelteKit',
+    value: 'nirmanVihar',
+    label: 'Nirman Vihar',
   },
   {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
+    value: 'malviyaNagar',
+    label: 'Malviya Nagar',
   },
   {
-    value: 'remix',
-    label: 'Remix',
+    value: 'saket',
+    label: 'Saket',
   },
   {
-    value: 'astro',
-    label: 'Astro',
+    value: 'laxmiNagar',
+    label: 'Laxmi Nagar',
   },
 ];
 let FilterHead = ({ tittle, filters, bottom }) => {
@@ -82,10 +82,10 @@ let FilterHead = ({ tittle, filters, bottom }) => {
 
 let RadioButtonField = () => {
   return (
-    <RadioGroup defaultValue='option-one'>
+    <RadioGroup defaultValue='option-one ' className="space-y-3">
       <div className='flex items-center space-x-2'>
-        <RadioGroupItem value='option-one' id='option-one' />
-        <Label htmlFor='option-one'>One</Label>
+        <RadioGroupItem value='AgarkarNagar' id='option-one' />
+        <Label htmlFor='option-one'>Agarkar Nagar</Label>
       </div>
       <div className='flex items-center space-x-2'>
         <RadioGroupItem value='option-two' id='option-two' />
@@ -123,17 +123,17 @@ export default function Home() {
                 variant='outline'
                 role='combobox'
                 aria-expanded={open}
-                className='w-[200px] justify-between'>
+                className='w-[160px] justify-between'>
                 {value
                   ? frameworks.find((framework) => framework.value === value)
                       ?.label
-                  : 'Select framework...'}
+                  : 'Select Location'}
                 <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
               </Button>
             </PopoverTrigger>
             <PopoverContent className='w-[200px] p-0'>
               <Command>
-                <CommandInput placeholder='Search framework...' />
+                <CommandInput placeholder='Search Location' />
                 <CommandList>
                   <CommandEmpty>No framework found.</CommandEmpty>
                   <CommandGroup>
@@ -171,7 +171,7 @@ export default function Home() {
             location='Mayur Vihar, Delhi'
             language='Hindi, Thoda English'
             education='12th Pass'
-            skill={['computer', 'Data Entry']}
+            skill={['Computer', 'Data Entry']}
             experience={['2 yrs Back Office / Data Entry']}
             assetsDcos={['Bike', 'DL']}
           />
@@ -183,7 +183,7 @@ export default function Home() {
             location='Mayur Vihar, Delhi'
             language='Hindi, Thoda English'
             education='12th Pass'
-            skill={['computer', 'Data Entry']}
+            skill={['Computer', 'Data Entry']}
             experience={['2 yrs Back Office / Data Entry']}
             assetsDcos={['Bike', 'DL']}
           />
@@ -195,19 +195,7 @@ export default function Home() {
             location='Mayur Vihar, Delhi'
             language='Hindi, Thoda English'
             education='12th Pass'
-            skill={['computer', 'Data Entry']}
-            experience={['2 yrs Back Office / Data Entry']}
-            assetsDcos={['Bike', 'DL']}
-          />
-           <Tupple
-            name='Balram'
-            gender='Male'
-            age='27'
-            salary='₹25k - ₹35k /Month'
-            location='Mayur Vihar, Delhi'
-            language='Hindi, Thoda English'
-            education='12th Pass'
-            skill={['computer', 'Data Entry']}
+            skill={['Computer', 'Data Entry']}
             experience={['2 yrs Back Office / Data Entry']}
             assetsDcos={['Bike', 'DL']}
           />

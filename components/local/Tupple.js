@@ -9,6 +9,7 @@ const {
   HeadsetIcon,
   FileIcon,
   LockIcon,
+  CoinsIcon,
 } = require('lucide-react');
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -44,20 +45,30 @@ let Tupple = ({
 
           <div className='grid grid-cols-2 gap-4 mt-8 lg:gap-8 lg:flex lg:items-center text-muted-foreground '>
             <div className='flex items-center gap-2 '>
-              <MapPinIcon size={16} className=' text-muted-foreground' />
+              <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+              <MapPinIcon size={18} className='text-teal-600 ' />
+              </div>
+            
               <div className='text-sm lg:text-base'>{location}</div>
             </div>
             <div className='flex items-center gap-2 '>
-              <IndianRupeeIcon size={16} className=' text-muted-foreground' />
+            <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+              <CoinsIcon size={18} className='text-teal-600 ' />
+              </div>
               <div className='text-sm lg:text-base'>{salary}</div>
             </div>
 
             <div className='flex items-center gap-2 '>
-              <LanguagesIcon size={16} className=' text-muted-foreground' />
+            <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+              
+              <LanguagesIcon size={18} className='text-teal-600 ' />
+              </div>
               <div className='text-sm lg:text-base'>{language}</div>
             </div>
             <div className='flex items-center gap-2 '>
-              <GraduationCapIcon size={16} className=' text-muted-foreground' />
+            <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+              <GraduationCapIcon size={18} className='text-teal-600' />
+              </div>
               <div className='text-sm lg:text-base ordinal'>{education}</div>
             </div>
           </div>
