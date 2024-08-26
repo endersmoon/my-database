@@ -29,10 +29,10 @@ let Tupple = ({
 }) => {
   return (
     <div className=' border min-h-[80px] bg-background rounded-2xl py-3'>
-      <div className='flex items-start justify-between pb-4 border-b '>
-        <div className='pl-3 '>
+      <div className='flex items-start justify-between px-3 pb-4 border-b '>
+        <div className=''>
           <div className='flex gap-2 '>
-            <div className='flex items-center justify-center text-blue-400 rounded-xl bg-blue-50 size-12'>
+            <div className='flex items-center justify-center text-blue-400 rounded-xl bg-muted size-12'>
               <User2Icon />
             </div>
             <div>
@@ -43,7 +43,16 @@ let Tupple = ({
             </div>
           </div>
 
-          <div className='grid grid-cols-2 gap-4 mt-8 lg:gap-8 lg:flex lg:items-center text-muted-foreground '>
+          
+        </div>
+
+        <div className='pr-3'>
+          {unlocked ? (
+            <Badge className={'bg-purple-50 text-purple-600'}>Unlocked</Badge>
+          ) : null}
+        </div>
+      </div>
+      <div className='grid grid-cols-2 gap-4 p-3 border-b lg:gap-8 lg:flex lg:items-center text-muted-foreground '>
             <div className='flex items-center gap-2 '>
               <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
               <MapPinIcon size={18} className='text-teal-600 ' />
@@ -72,15 +81,6 @@ let Tupple = ({
               <div className='text-sm lg:text-base ordinal'>{education}</div>
             </div>
           </div>
-        </div>
-
-        <div className='pr-3'>
-          {unlocked ? (
-            <Badge className={'bg-purple-50 text-purple-600'}>Unlocked</Badge>
-          ) : null}
-        </div>
-      </div>
-
       <div className='grid grid-cols-1 gap-4 px-3 pb-6 mt-6 border-b md:grid-cols-3'>
         <div className='md:border-r '>
           <div className='text-sm text-muted-foreground '>SKILLS</div>
@@ -90,7 +90,7 @@ let Tupple = ({
                 <li key={index}>
                   <Badge
                     variant='outline'
-                    className={'bg-blue-50 rounded-sm font-normal'}>
+                    className={'bg-muted rounded-sm font-normal'}>
                     {s}
                   </Badge>
                 </li>
@@ -107,7 +107,7 @@ let Tupple = ({
                 <li key={index}>
                   <Badge
                     variant='outline'
-                    className={'bg-blue-50 rounded-sm font-normal'}>
+                    className={'bg-muted rounded-sm font-normal'}>
                     {e}
                   </Badge>
                 </li>
@@ -123,7 +123,7 @@ let Tupple = ({
                 <li key={index}>
                   <Badge
                     variant='outline'
-                    className={'bg-blue-50 rounded-sm font-normal'}>
+                    className={'bg-muted rounded-sm font-normal'}>
                     {a}
                   </Badge>
                 </li>

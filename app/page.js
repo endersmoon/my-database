@@ -29,6 +29,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 
+
 const frameworks = [
   {
     value: 'mayurVihar',
@@ -51,21 +52,26 @@ const frameworks = [
     label: 'Laxmi Nagar',
   },
 ];
-let FilterHead = ({ tittle, filters, bottom }) => {
+let FilterHead = ({ tittle, filters, bottom, clear, open }) => {
   return (
     <div className=''>
-      <Collapsible className={`${bottom ? null : 'pb-3 border-b'}`}>
+      <Collapsible
+        className={`${bottom ? null : 'pb-3 border-b'}`}
+        defaultOpen={open}>
         <div className={`flex items-center justify-between `}>
           <div className='flex items-center text-base font-medium '>
             {tittle}
           </div>
           <div className='flex items-center'>
-            <Button
-              variant='ghost'
-              size='sm'
-              className='text-blue-600 hover:text-blue-600 hover:bg-blue-50'>
-              Clear
-            </Button>
+            {clear ? (
+              <Button
+                variant='ghost'
+                size='sm'
+                className='text-blue-600 hover:text-blue-600 hover:bg-blue-50'>
+                Clear
+              </Button>
+            ) : null}
+
             <CollapsibleTrigger asChild>
               <Button variant='ghost' size='icon'>
                 <ChevronDown />
@@ -82,19 +88,79 @@ let FilterHead = ({ tittle, filters, bottom }) => {
 
 let RadioButtonField = () => {
   return (
-    <RadioGroup defaultValue='option-one ' className="space-y-3">
+    <RadioGroup defaultValue='option-one ' className='space-y-3'>
       <div className='flex items-center space-x-2'>
         <RadioGroupItem value='AgarkarNagar' id='option-one' />
         <Label htmlFor='option-one'>Agarkar Nagar</Label>
       </div>
       <div className='flex items-center space-x-2'>
-        <RadioGroupItem value='option-two' id='option-two' />
-        <Label htmlFor='option-two'>Two</Label>
+        <RadioGroupItem value='Akurdi' id='option-two' />
+        <Label htmlFor='option-two'>Akurdi</Label>
       </div>
     </RadioGroup>
   );
 };
 
+let GenderField = () => {
+  return (
+    <RadioGroup defaultValue='option-one ' className='space-y-3'>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='any' id='option-one' />
+        <Label htmlFor='any'>Any</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='male' id='option-one' />
+        <Label htmlFor='male'>Male</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='female' id='option-two' />
+        <Label htmlFor='female'>Female</Label>
+      </div>
+    </RadioGroup>
+  );
+};
+
+let QualificationField = () => {
+  return (
+    <RadioGroup defaultValue='option-one ' className='space-y-3'>
+      <div className='flex items-center justify-between gap-2 '>
+        <div className='flex items-center space-x-2'>
+          <RadioGroupItem value='any' id='option-one' />
+          <Label htmlFor='any'>Any</Label>
+        </div>
+
+        <Label></Label>
+      </div>
+      <div className='flex items-center justify-between gap-2 '>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='tenth' id='option-one' />
+        <Label htmlFor='any'>
+          10<sup>th</sup> Pass
+        </Label>
+      </div>
+      <Label>423</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='twelth' id='option-one' />
+        <Label htmlFor='any'>
+          12<sup>th</sup> Pass
+        </Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='diploma' id='option-one' />
+        <Label htmlFor='any'>Diploma</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='grad' id='option-one' />
+        <Label htmlFor='any'>Graduate</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='postgrad' id='option-one' />
+        <Label htmlFor='any'>Post Graduate</Label>
+      </div>
+    </RadioGroup>
+  );
+};
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
@@ -102,7 +168,7 @@ export default function Home() {
     <div className='grid overflow-hidden lg:grid-cols-8 h-[calc(100vh-80px)]'>
       <div className='col-span-1 p-6 overflow-scroll border-r lg:col-span-6'>
         <section className='mb-6'>
-         
+          <h1 className='mb-3 text-xl font-semibold'>500 Candidates</h1>
           <Tabs defaultValue='account' className='w-[400px]'>
             <TabsList>
               <TabsTrigger value='account'>All</TabsTrigger>
@@ -187,7 +253,7 @@ export default function Home() {
             experience={['2 yrs Back Office / Data Entry']}
             assetsDcos={['Bike', 'DL']}
           />
-           <Tupple
+          <Tupple
             name='Balram'
             gender='Male'
             age='27'
@@ -203,11 +269,19 @@ export default function Home() {
       </div>
       <div className='hidden p-6 overflow-scroll lg:col-span-2 lg:block'>
         <div className='w-full py-3 space-y-4 min-h-20 '>
-          <div className='mb-3 text-lg font-medium '>Filter</div>
-          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Gender'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Qualification'} filters={<RadioButtonField />} />
+          <div className='flex items-center justify-between'>
+          <div className='mb-3 text-xl font-medium '>Filter By</div>
+          <div>500 Candidates</div>
+
+          </div>
+          
+          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open />
+          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} open />
+          <FilterHead tittle={'Gender'} filters={<GenderField />} open />
+          <FilterHead
+            tittle={'Qualification'}
+            filters={<QualificationField />}
+          />
           <FilterHead tittle={'Experience'} filters={<RadioButtonField />} />
           <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
           <FilterHead tittle={'Industry'} filters={<RadioButtonField />} />
