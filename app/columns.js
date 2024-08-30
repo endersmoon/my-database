@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
-import { MoreHorizontalIcon, PhoneIcon, UnlockIcon,ArrowUpDown } from 'lucide-react';
+import { MoreHorizontalIcon, PhoneIcon, UnlockIcon,ArrowUpDown, VoicemailIcon, MicIcon, FileIcon, MessageCircleIcon } from 'lucide-react';
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox"
 
@@ -116,7 +116,7 @@ const columns = [
       return (
         <ul
           key={row.original.id}
-          className='flex flex-wrap items-center gap-2 max-w-[160px] '>
+          className='flex flex-wrap items-center gap-2 max-w-[200px] '>
           {langs.slice(0, 2).map((lang, index) => {
             return (
               <li
@@ -142,7 +142,7 @@ const columns = [
 
       let j = l > 2 ? l - 2 : null;
       return (
-        <ul key={row.original.id} className='flex flex-wrap items-center gap-2 max-w-[160px]'>
+        <ul key={row.original.id} className='flex flex-wrap items-center gap-2 max-w-[200px]'>
           {skills.slice(0, 2).map((skill, index) => {
             return (
               <li
@@ -184,13 +184,13 @@ const columns = [
     },
   },
   {
-    header: ' ',
+    header: 'Actions',
     cell: ({ row }) => {
       return (
         <div className='flex items-center gap-2 '>
-          <Button size='icon' variant='outline'>
-            {' '}
-            <UnlockIcon size={16} />
+          <Button  variant='outline' >
+            
+            <UnlockIcon size={16} className="mr-2" /> Unlock
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -202,11 +202,11 @@ const columns = [
             <DropdownMenuContent>
               <DropdownMenuLabel>Quick Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Audio Intro</DropdownMenuItem>
-              <DropdownMenuItem>Resume</DropdownMenuItem>
+              <DropdownMenuItem> <MicIcon size={16} className="mr-2" /> Audio Intro</DropdownMenuItem>
+              <DropdownMenuItem disabled> <FileIcon  size={16} className="mr-2" /> Resume</DropdownMenuItem>
               
-              <DropdownMenuItem>Call</DropdownMenuItem>
-              <DropdownMenuItem>Message</DropdownMenuItem>
+              <DropdownMenuItem disabled><PhoneIcon  size={16} className="mr-2" />Call</DropdownMenuItem>
+              <DropdownMenuItem disabled> <MessageCircleIcon  size={16} className="mr-2" /> Message</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

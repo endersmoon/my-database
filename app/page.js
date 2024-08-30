@@ -323,8 +323,8 @@ export default function Home() {
           <section className='sticky top-0 z-10 flex items-center justify-between mb-6 border-b min-h-20 bg-background'>
             <Tabs defaultValue='all' className='w-[400px] pl-3'>
               <TabsList>
-                <TabsTrigger value='all'>All (500)</TabsTrigger>
-                <TabsTrigger value='unlocked'>Unlocked(0)</TabsTrigger>
+                <TabsTrigger value='all'>All</TabsTrigger>
+                <TabsTrigger value='unlocked'>Unlocked</TabsTrigger>
               </TabsList>
             </Tabs>
 
@@ -345,49 +345,7 @@ export default function Home() {
                   </ToggleGroupItem>
                 </ToggleGroup>
               </div>
-              <div className='flex items-center gap-2 pl-3 mr-3 md:border-l '>
-                <Pagination
-                  className={' flex items-center justify-start w-fit'}>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <Button
-                        variant='outline'
-                        size='icon'
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}>
-                        <ChevronLeftIcon />
-                      </Button>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <Button
-                        variant='outline'
-                        size='icon'
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}>
-                        <ChevronRightIcon />
-                      </Button>
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-                <div className='hidden md:block'>
-                  <Select
-                    value={table.getState().pagination.pageSize}
-                    onValueChange={(e) => {
-                      table.setPageSize(Number(e));
-                    }}>
-                    <SelectTrigger className='w-[80px]'>
-                      <SelectValue placeholder='10' />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[10, 20, 30, 40, 50].map((pageSize) => (
-                        <SelectItem key={pageSize} value={pageSize}>
-                          {pageSize}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+              
             </div>
           </section>
 
@@ -450,6 +408,63 @@ export default function Home() {
                 </PopoverContent>
               </Popover>
             </div>
+          </section>
+
+          <section className='flex items-center justify-between mx-6 mb-4 '>
+            <div>
+
+            
+            <h2 className='text-lg font-medium '>500 Candidates</h2>
+            <div className='text-xs text-muted-foreground'>
+              Showing 1/
+               { table.getPageCount()} Page(s)
+            </div>
+            </div>
+          <div className='flex items-center gap-2 '>
+                <Pagination
+                  className={' flex items-center justify-start w-fit'}>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <Button
+                        variant='outline'
+                        size='icon'
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
+                        <ChevronLeftIcon />
+                      </Button>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <Button
+                        variant='outline'
+                        size='icon'
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}>
+                        <ChevronRightIcon />
+                      </Button>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+                <div className='items-center hidden gap-2 md:flex'>
+
+                  <div>Show</div>
+                  <Select
+                    value={table.getState().pagination.pageSize}
+                    onValueChange={(e) => {
+                      table.setPageSize(Number(e));
+                    }}>
+                    <SelectTrigger className='w-[80px]'>
+                      <SelectValue placeholder='10' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[10, 20, 30, 40, 50].map((pageSize) => (
+                        <SelectItem key={pageSize} value={pageSize}>
+                          {pageSize}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
           </section>
 
           {/* Data Layer */}
