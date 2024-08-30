@@ -7,7 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer';
 import Tupple from '@/components/local/Tupple';
 import { Button } from '@/components/ui/button';
 import {
@@ -224,218 +233,257 @@ export default function Home() {
   });
 
   return (
-    <div className='grid overflow-hidden lg:grid-cols-8 h-[calc(100vh-80px)]'>
-      <div className='hidden p-6 overflow-scroll lg:col-span-2 lg:block'>
+    <div className='grid overflow-hidden lg:grid-cols-12 h-[calc(100vh-80px)]'>
+      <div className='hidden p-6 overflow-scroll lg:col-span-3 xl:col-span-2 lg:block'>
         <div className='w-full py-3 space-y-4 min-h-20 '>
           <div className='flex items-center justify-between'>
-            <div className='mb-3 text-xl font-medium '>Filter By</div>
-            <div>500 Candidates</div>
+            <div className='mb-3 text-xl font-medium '>Filter</div>
           </div>
+          <FilterHead
+            tittle={'Last Active'}
+            filters={<RadioButtonField />}
+            open
+          />
 
           <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open />
           <FilterHead tittle={'Distance'} filters={<RadioButtonField />} open />
           <FilterHead tittle={'Gender'} filters={<GenderField />} open />
           <FilterHead
-            tittle={'Qualification'}
+            tittle={'Min Qualification'}
             filters={<QualificationField />}
           />
           <FilterHead tittle={'Experience'} filters={<RadioButtonField />} />
           <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Industry'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Skill'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Asset'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Language'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Last Active'} filters={<RadioButtonField />} />
         </div>
       </div>
 
-      <div className='relative col-span-1 pb-6 overflow-scroll border-l lg:col-span-6'>
-        <section className='sticky top-0 z-10 flex items-center justify-between mb-6 border-b min-h-20 bg-background'>
-          <Tabs defaultValue='all' className='w-[400px] pl-3'>
-            <TabsList>
-              <TabsTrigger value='all'>All (500)</TabsTrigger>
-              <TabsTrigger value='unlocked'>Unlocked(0)</TabsTrigger>
-            </TabsList>
-          </Tabs>
-         
+      <div className='relative col-span-1 pb-6 overflow-scroll border-l lg:col-span-9 xl:col-span-10'>
+        <Drawer>
+          <section className='sticky top-0 z-10 flex items-center justify-between mb-6 border-b min-h-20 bg-background'>
+            <Tabs defaultValue='all' className='w-[400px] pl-3'>
+              <TabsList>
+                <TabsTrigger value='all'>All (500)</TabsTrigger>
+                <TabsTrigger value='unlocked'>Unlocked(0)</TabsTrigger>
+              </TabsList>
+            </Tabs>
 
-          <div className='flex items-center gap-2 '>
-          <ToggleGroup
-            onValueChange={(value) => {
-              setView(value);
-            }}
-            className='mr-3'
-            defaultValue='table'
-            type='single'>
-            <ToggleGroupItem variant='outline' value='table'>
-              <Table2Icon size={16} />
-            </ToggleGroupItem>
-            <ToggleGroupItem variant='outline' value='card'>
-              <Rows2Icon size={16} />
-            </ToggleGroupItem>
-          </ToggleGroup>
-
-          <div className='flex items-center gap-2 pl-3 mr-3 border-l '>
-          <Pagination className={' flex items-center justify-start w-fit'}>
-              <PaginationContent>
-                <PaginationItem>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}>
-                    <ChevronLeftIcon />
-                  </Button>
-                </PaginationItem>
-                <PaginationItem>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}>
-                    <ChevronRightIcon />
-                  </Button>
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-
-            <Select
-              value={table.getState().pagination.pageSize}
-              onValueChange={(e) => {
-                table.setPageSize(Number(e));
-              }}>
-              <SelectTrigger className='w-[80px]'>
-                <SelectValue placeholder='10' />
-              </SelectTrigger>
-              <SelectContent>
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <SelectItem key={pageSize} value={pageSize}>
-                    {pageSize}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            
-          </div>
-            
-          </div>
-        </section>
-
-        <section className='flex items-center justify-between gap-3 px-6 mb-6'>
-          <div className='flex items-center gap-2 '>
-            <div className='pr-3 border-r '>
-              <Button variant='outline' size='sm'>
-                Filter
-              </Button>
-            </div>
-
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  role='combobox'
-                  aria-expanded={open}
-                  className='w-[160px] justify-between'>
-                  {value
-                    ? frameworks.find((framework) => framework.value === value)
-                        ?.label
-                    : 'Select Location'}
-                  <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className='w-[200px] p-0'>
-                <Command>
-                  <CommandInput placeholder='Search Location' />
-                  <CommandList>
-                    <CommandEmpty>No framework found.</CommandEmpty>
-                    <CommandGroup>
-                      {frameworks.map((framework) => (
-                        <CommandItem
-                          key={framework.value}
-                          value={framework.value}
-                          onSelect={(currentValue) => {
-                            setValue(
-                              currentValue === value ? '' : currentValue
-                            );
-                            setOpen(false);
-                          }}>
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              value === framework.value
-                                ? 'opacity-100'
-                                : 'opacity-0'
-                            )}
-                          />
-                          {framework.label}
-                        </CommandItem>
+            <div className='flex items-center gap-2 '>
+              <div className='hidden md:block'>
+                <ToggleGroup
+                  onValueChange={(value) => {
+                    setView(value);
+                  }}
+                  className='mr-3'
+                  defaultValue='table'
+                  type='single'>
+                  <ToggleGroupItem variant='outline' value='table'>
+                    <Table2Icon size={16} />
+                  </ToggleGroupItem>
+                  <ToggleGroupItem variant='outline' value='card'>
+                    <Rows2Icon size={16} />
+                  </ToggleGroupItem>
+                </ToggleGroup>
+              </div>
+              <div className='flex items-center gap-2 pl-3 mr-3 md:border-l '>
+                <Pagination
+                  className={' flex items-center justify-start w-fit'}>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <Button
+                        variant='outline'
+                        size='icon'
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
+                        <ChevronLeftIcon />
+                      </Button>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <Button
+                        variant='outline'
+                        size='icon'
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}>
+                        <ChevronRightIcon />
+                      </Button>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+                <div className='hidden md:block'>
+                  <Select
+                    value={table.getState().pagination.pageSize}
+                    onValueChange={(e) => {
+                      table.setPageSize(Number(e));
+                    }}>
+                    <SelectTrigger className='w-[80px]'>
+                      <SelectValue placeholder='10' />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[10, 20, 30, 40, 50].map((pageSize) => (
+                        <SelectItem key={pageSize} value={pageSize}>
+                          {pageSize}
+                        </SelectItem>
                       ))}
-                    </CommandGroup>
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-
-          
-        </section>
-
-
-
-
-        {/* Data Layer */ }
-        <section className='px-6 space-y-6 '>
-          {viewIs == 'table' ? (
-            <div className='border rounded-xl'>
-              <Table>
-                <TableHeader className=''>
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                      {headerGroup.headers.map((header) => {
-                        return (
-                          <TableHead key={header.id}>
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                          </TableHead>
-                        );
-                      })}
-                    </TableRow>
-                  ))}
-                </TableHeader>
-                <TableBody>
-                  {table.getRowModel().rows?.length ? (
-                    table.getRowModel().rows.map((row) => (
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && 'selected'}>
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell
-                        colSpan={columns.length}
-                        className='h-24 text-center'>
-                        No results.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
-          ) : (
-            <div>
+          </section>
+
+          <section className='flex items-center justify-between gap-3 px-6 mb-6 md:hidden'>
+            <div className='flex items-center gap-2 '>
+              <div className='pr-3 border-r '>
+                <DrawerTrigger>
+                  {' '}
+                  <Button variant='outline' size='sm'>
+                    Filter
+                  </Button>
+                </DrawerTrigger>
+              </div>
+
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant='outline'
+                    role='combobox'
+                    aria-expanded={open}
+                    className='w-[160px] justify-between'>
+                    {value
+                      ? frameworks.find(
+                          (framework) => framework.value === value
+                        )?.label
+                      : 'Select Location'}
+                    <ChevronsUpDown className='w-4 h-4 ml-2 opacity-50 shrink-0' />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className='w-[200px] p-0'>
+                  <Command>
+                    <CommandInput placeholder='Search Location' />
+                    <CommandList>
+                      <CommandEmpty>No framework found.</CommandEmpty>
+                      <CommandGroup>
+                        {frameworks.map((framework) => (
+                          <CommandItem
+                            key={framework.value}
+                            value={framework.value}
+                            onSelect={(currentValue) => {
+                              setValue(
+                                currentValue === value ? '' : currentValue
+                              );
+                              setOpen(false);
+                            }}>
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                value === framework.value
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                            {framework.label}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+          </section>
+
+          {/* Data Layer */}
+          <section className='hidden px-6 space-y-6 md:block '>
+            {viewIs == 'table' ? (
+              <div className='border rounded-xl'>
+                <Table>
+                  <TableHeader className=''>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <TableRow key={headerGroup.id}>
+                        {headerGroup.headers.map((header) => {
+                          return (
+                            <TableHead key={header.id}>
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext()
+                                  )}
+                            </TableHead>
+                          );
+                        })}
+                      </TableRow>
+                    ))}
+                  </TableHeader>
+                  <TableBody>
+                    {table.getRowModel().rows?.length ? (
+                      table.getRowModel().rows.map((row) => (
+                        <TableRow
+                          key={row.id}
+                          data-state={row.getIsSelected() && 'selected'}>
+                          {row.getVisibleCells().map((cell) => (
+                            <TableCell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell
+                          colSpan={columns.length}
+                          className='h-24 text-center'>
+                          No results.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            ) : (
+              <div className='space-y-6 '>
+                {table.getRowModel().rows?.length ? (
+                  table
+                    .getRowModel()
+                    .rows.map((row) => (
+                      <Tupple
+                        key={row.original.id}
+                        name={
+                          row.original.first_name +
+                          ' ' +
+                          (row.original.last_name
+                            ? row.original.last_name
+                            : ' ')
+                        }
+                        gender={row.original.gender}
+                        age='27'
+                        salary={
+                          row.original.current_salary
+                            ? row.original.current_salary
+                            : 'Salary: NA'
+                        }
+                        location={row.original.locality}
+                        language={row.original.language_value_array[0]}
+                        education={row.original.qualification_label}
+                        skill={row.original.skill_values_array}
+                        experience={['2 yrs Back Office / Data Entry']}
+                        assetsDcos={
+                          row.original.assets_array
+                            ? row.original.assets_array
+                            : null
+                        }
+                      />
+                    ))
+                ) : (
+                  <div>No results.</div>
+                )}
+              </div>
+            )}
+          </section>
+          <section className='block mx-3 md:hidden'>
+            <div className='space-y-6 '>
               {table.getRowModel().rows?.length ? (
                 table
                   .getRowModel()
@@ -470,8 +518,31 @@ export default function Home() {
                 <div>No results.</div>
               )}
             </div>
-          )}
-        </section>
+          </section>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Filter</DrawerTitle>
+              
+            </DrawerHeader>
+           <div className='px-3 space-y-3 '>
+           <FilterHead
+            tittle={'Last Active'}
+            filters={<RadioButtonField />}
+            open
+          />
+
+          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open />
+          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} open />
+          <FilterHead tittle={'Gender'} filters={<GenderField />} open />
+          <FilterHead
+            tittle={'Min Qualification'}
+            filters={<QualificationField />}
+          />
+          <FilterHead tittle={'Experience'} filters={<RadioButtonField />} />
+          <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
+           </div>
+          </DrawerContent>
+        </Drawer>
       </div>
     </div>
   );
