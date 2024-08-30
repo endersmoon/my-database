@@ -14,7 +14,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-
+import { ConfettiButton } from "@/components/magicui/confetti";
 import { useState } from 'react';
 
 let Tupple = ({
@@ -161,6 +161,7 @@ let Tupple = ({
             <HeadsetIcon size={16} className='md:mr-2' />
             <div className='hidden md:block'>Call</div>
           </Button>
+      
           {lck ?  (
             <Button className='bg-blue-600 hover:bg-blue-700' size='sm' onClick={()=>{
               setUnlock(false)
