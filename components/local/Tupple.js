@@ -141,13 +141,16 @@ let Tupple = ({
         </div>
         <div className='flex items-center gap-2 pr-3 '>
           <Button variant="outline" disabled size='sm'>
-            <FileIcon size={16} className='mr-2' /> View Resume
+            <FileIcon size={16} className='md:mr-2' />
+            <div className='hidden md:block'>View Resume</div> 
           </Button>
           <Button disabled={unlocked? false: true} className='bg-blue-600 hover:bg-blue-700' size='sm'>
-            <HeadsetIcon size={16} className='mr-2' /> Call
+            <HeadsetIcon size={16} className='md:mr-2' /><div className='hidden md:block'>Call
+              </div> 
           </Button>
           {unlocked? null : <Button className='bg-blue-600 hover:bg-blue-700' size='sm'>
-            <LockIcon size={16} className='mr-2' /> Unlock
+            <LockIcon size={16} className='mr-2' />
+            Unlock
           </Button>}
          
         </div>
