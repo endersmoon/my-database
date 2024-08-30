@@ -28,6 +28,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 import {
   Check,
@@ -245,9 +246,9 @@ export default function Home() {
             open
           />
 
-          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open />
-          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} open />
-          <FilterHead tittle={'Gender'} filters={<GenderField />} open />
+          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} />
+          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} />
+          <FilterHead tittle={'Gender'} filters={<GenderField />} />
           <FilterHead
             tittle={'Min Qualification'}
             filters={<QualificationField />}
@@ -522,25 +523,27 @@ export default function Home() {
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Filter</DrawerTitle>
-              
             </DrawerHeader>
-           <div className='px-3 space-y-3 '>
-           <FilterHead
-            tittle={'Last Active'}
-            filters={<RadioButtonField />}
-            open
-          />
+            <ScrollArea className='px-3  h-[70vh] space-y-3 '>
+              <FilterHead
+                tittle={'Last Active'}
+                filters={<RadioButtonField />}
+                open
+              />
 
-          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open />
-          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} open />
-          <FilterHead tittle={'Gender'} filters={<GenderField />} open />
-          <FilterHead
-            tittle={'Min Qualification'}
-            filters={<QualificationField />}
-          />
-          <FilterHead tittle={'Experience'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
-           </div>
+              <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open/>
+              <FilterHead tittle={'Distance'} filters={<RadioButtonField />}open />
+              <FilterHead tittle={'Gender'} filters={<GenderField />} open/>
+              <FilterHead
+                tittle={'Min Qualification'}
+                filters={<QualificationField />}
+              />
+              <FilterHead
+                tittle={'Experience'}
+                filters={<RadioButtonField />}
+              />
+              <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
+            </ScrollArea>
           </DrawerContent>
         </Drawer>
       </div>
