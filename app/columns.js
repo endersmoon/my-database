@@ -28,10 +28,7 @@ const columns = [
     accessorKey: 'qualification_label',
     header: 'Qualification',
   },
-  {
-    accessorKey: 'city',
-    header: 'City',
-  },
+ 
   {
     accessorKey: 'locality',
     header: 'Locale',

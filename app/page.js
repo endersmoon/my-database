@@ -18,6 +18,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 
 import {
   Check,
@@ -28,6 +29,8 @@ import {
   ChevronRightIcon,
   ChevronLeftIcon,
   GemIcon,
+  Table2Icon,
+  Rows2Icon,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -201,10 +204,8 @@ let QualificationField = () => {
   );
 };
 
-
-
-
 export default function Home() {
+  const [viewIs, setView] = useState('table');
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
   const uniqueLocality = [...new Set(data.map((item) => item.locality))];
@@ -224,8 +225,6 @@ export default function Home() {
 
   return (
     <div className='grid overflow-hidden lg:grid-cols-8 h-[calc(100vh-80px)]'>
-
-      
       <div className='hidden p-6 overflow-scroll lg:col-span-2 lg:block'>
         <div className='w-full py-3 space-y-4 min-h-20 '>
           <div className='flex items-center justify-between'>
@@ -250,20 +249,75 @@ export default function Home() {
         </div>
       </div>
 
-
-      <div className='relative col-span-1 pb-6 overflow-scroll border-l lg:col-span-6' >
-        <section className='sticky top-0 z-10 flex items-center justify-between pt-3 pb-3 mb-6 border-b bg-background'>
-         
-          <Tabs defaultValue='account' className='w-[400px] pl-3'>
+      <div className='relative col-span-1 pb-6 overflow-scroll border-l lg:col-span-6'>
+        <section className='sticky top-0 z-10 flex items-center justify-between mb-6 border-b min-h-20 bg-background'>
+          <Tabs defaultValue='all' className='w-[400px] pl-3'>
             <TabsList>
-              <TabsTrigger value='account'>All (500)</TabsTrigger>
-              <TabsTrigger value='password'>Unlocked(0)</TabsTrigger>
+              <TabsTrigger value='all'>All (500)</TabsTrigger>
+              <TabsTrigger value='unlocked'>Unlocked(0)</TabsTrigger>
             </TabsList>
           </Tabs>
+         
 
-          <div className='flex items-center gap-2 px-3 py-2 pr-3 border rounded-full'>
-            <GemIcon size={16} />
-            <div>100 Left</div>
+          <div className='flex items-center gap-2 '>
+          <ToggleGroup
+            onValueChange={(value) => {
+              setView(value);
+            }}
+            className='mr-3'
+            defaultValue='table'
+            type='single'>
+            <ToggleGroupItem variant='outline' value='table'>
+              <Table2Icon size={16} />
+            </ToggleGroupItem>
+            <ToggleGroupItem variant='outline' value='card'>
+              <Rows2Icon size={16} />
+            </ToggleGroupItem>
+          </ToggleGroup>
+
+          <div className='flex items-center gap-2 pl-3 mr-3 border-l '>
+          <Pagination className={' flex items-center justify-start w-fit'}>
+              <PaginationContent>
+                <PaginationItem>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}>
+                    <ChevronLeftIcon />
+                  </Button>
+                </PaginationItem>
+                <PaginationItem>
+                  <Button
+                    variant='outline'
+                    size='icon'
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}>
+                    <ChevronRightIcon />
+                  </Button>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+
+            <Select
+              value={table.getState().pagination.pageSize}
+              onValueChange={(e) => {
+                table.setPageSize(Number(e));
+              }}>
+              <SelectTrigger className='w-[80px]'>
+                <SelectValue placeholder='10' />
+              </SelectTrigger>
+              <SelectContent>
+                {[10, 20, 30, 40, 50].map((pageSize) => (
+                  <SelectItem key={pageSize} value={pageSize}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+          </div>
+            
           </div>
         </section>
 
@@ -323,119 +377,102 @@ export default function Home() {
             </Popover>
           </div>
 
-          <div className='flex items-center gap-2 '>
-            <Pagination className={' flex items-center justify-start'}>
-              <PaginationContent>
-                <PaginationItem>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}>
-                    <ChevronLeftIcon />
-                  </Button>
-                </PaginationItem>
-                <PaginationItem>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}>
-                    <ChevronRightIcon />
-                  </Button>
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-
-            <Select
-              value={table.getState().pagination.pageSize}
-              onValueChange={(e) => {
-                table.setPageSize(Number(e));
-              }}>
-              <SelectTrigger className='w-[80px]'>
-                <SelectValue placeholder='10' />
-              </SelectTrigger>
-              <SelectContent>
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <SelectItem key={pageSize} value={pageSize}>
-                    {pageSize}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          
         </section>
+
+
+
+
+        {/* Data Layer */ }
         <section className='px-6 space-y-6 '>
-          <div className='border rounded-xl'>
-            <Table>
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody>
-                {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && 'selected'}>
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
+          {viewIs == 'table' ? (
+            <div className='border rounded-xl'>
+              <Table>
+                <TableHeader className=''>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => {
+                        return (
+                          <TableHead key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                          </TableHead>
+                        );
+                      })}
                     </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && 'selected'}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className='h-24 text-center'>
+                        No results.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          ) : (
+            <div>
+              {table.getRowModel().rows?.length ? (
+                table
+                  .getRowModel()
+                  .rows.map((row) => (
+                    <Tupple
+                      key={row.original.id}
+                      name={
+                        row.original.first_name +
+                        ' ' +
+                        (row.original.last_name ? row.original.last_name : ' ')
+                      }
+                      gender={row.original.gender}
+                      age='27'
+                      salary={
+                        row.original.current_salary
+                          ? row.original.current_salary
+                          : 'Salary: NA'
+                      }
+                      location={row.original.locality}
+                      language={row.original.language_value_array[0]}
+                      education={row.original.qualification_label}
+                      skill={row.original.skill_values_array}
+                      experience={['2 yrs Back Office / Data Entry']}
+                      assetsDcos={
+                        row.original.assets_array
+                          ? row.original.assets_array
+                          : null
+                      }
+                    />
                   ))
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className='h-24 text-center'>
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
+              ) : (
+                <div>No results.</div>
+              )}
+            </div>
+          )}
         </section>
       </div>
     </div>
   );
-}
-
-{
-  /*data.map((c) => {
-  return (
-    <Tupple
-      key={c.id}
-      name={c.first_name + ' ' + c.last_name}
-      gender={c.gender}
-      age='27'
-      salary={c.current_salary ? c.current_salary : 'Salary: NA'}
-      location={c.locality}
-      language={c.language_value_array[0]}
-      education={c.qualification_label}
-      skill={c.skill_values_array}
-      experience={['2 yrs Back Office / Data Entry']}
-      assetsDcos={c.assets_array ? c.assets_array : null}
-    />
-  );
-})*/
 }

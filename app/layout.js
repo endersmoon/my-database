@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ArrowLeftIcon } from 'lucide-react';
+import { ArrowLeftIcon, GemIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -12,7 +12,7 @@ export const metadata = {
 
 let MinimalNavBar = ({title,description})=>{
   return(
-    <div className='flex items-center border-b min-h-20'>
+    <div className='flex items-center justify-between border-b min-h-20'>
           <div className='flex items-center gap-2'>
             <div className='pl-3.5'>
               <Button size='icon' variant='ghost'>
@@ -23,6 +23,11 @@ let MinimalNavBar = ({title,description})=>{
               <h2 className='text-base font-medium md:text-lg '>{title}</h2>
               <p className='text-sm text-muted-foreground'>{description}</p>
             </div>
+          </div>
+
+          <div className='flex items-center gap-2 px-3 py-2 pr-3 mr-6 border rounded-full'>
+            <GemIcon size={16} />
+            <div>100 Left</div>
           </div>
         </div>
 
