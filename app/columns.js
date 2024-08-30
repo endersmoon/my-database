@@ -8,9 +8,46 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button';
-import { MoreHorizontalIcon, PhoneIcon, UnlockIcon } from 'lucide-react';
+import { MoreHorizontalIcon, PhoneIcon, UnlockIcon,ArrowUpDown } from 'lucide-react';
+import Image from "next/image";
+import { Checkbox } from "@/components/ui/checkbox"
+
 
 const columns = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    header: 'Avatar',
+    cell: ({ row }) => {
+      
+
+      return (
+        <div>
+         <Image className="" width={60} height={60} src={row.original.gender =="male"? "/man.png":"/lady.png"} />
+        </div>
+      );
+    },
+  },
   {
     header: 'Candidate',
     cell: ({ row }) => {
@@ -30,9 +67,14 @@ const columns = [
             {candidate.first_name} {candidate.last_name}
           </div>
           <div className=' text-muted-foreground'>
-            {randomIntFromInterval(25, 44)} · {cap(candidate.gender)} ·{' '}
-            {candidate.qualification_label}
+            {randomIntFromInterval(25, 44)} · {cap(candidate.gender)} · {candidate.qualification_label}
+            
           </div>
+          <div className='mt-2 text-muted-foreground'>
+            {candidate.locality} 
+            
+          </div>
+
         </div>
       );
     },
@@ -74,7 +116,7 @@ const columns = [
       return (
         <ul
           key={row.original.id}
-          className='flex flex-wrap items-center gap-2 '>
+          className='flex flex-wrap items-center gap-2 max-w-[160px] '>
           {langs.slice(0, 2).map((lang, index) => {
             return (
               <li
@@ -100,7 +142,7 @@ const columns = [
 
       let j = l > 2 ? l - 2 : null;
       return (
-        <ul key={row.original.id} className='space-y-1'>
+        <ul key={row.original.id} className='flex flex-wrap items-center gap-2 max-w-[160px]'>
           {skills.slice(0, 2).map((skill, index) => {
             return (
               <li
@@ -124,7 +166,7 @@ const columns = [
       let l = assets.length;
       let j = l > 2 ? l - 2 : null;
       return (
-        <ul key={row.original.id} className='space-y-1'>
+        <ul key={row.original.id} className='flex flex-wrap items-center gap-2 max-w-[160px]'>
           {assets.slice(0, 2).map((asset, index) => {
             return (
               <li

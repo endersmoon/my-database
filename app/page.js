@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -7,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Slider } from '@/components/ui/slider';
 import {
   Drawer,
   DrawerClose,
@@ -57,6 +59,10 @@ import {
   getCoreRowModel,
   useReactTable,
   getPaginationRowModel,
+  SortingState,
+  getSortedRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
 } from '@tanstack/react-table';
 import {
   Command,
@@ -138,18 +144,38 @@ let FilterHead = ({ tittle, filters, bottom, clear, open }) => {
   );
 };
 
-let RadioButtonField = () => {
+let LastActive = () => {
   return (
     <RadioGroup defaultValue='option-one ' className='space-y-3'>
       <div className='flex items-center space-x-2'>
-        <RadioGroupItem value='AgarkarNagar' id='option-one' />
-        <Label htmlFor='option-one'>Agarkar Nagar</Label>
+        <RadioGroupItem value='any' id='option-two' />
+        <Label htmlFor='option-two'>Any</Label>
       </div>
       <div className='flex items-center space-x-2'>
-        <RadioGroupItem value='Akurdi' id='option-two' />
-        <Label htmlFor='option-two'>Akurdi</Label>
+        <RadioGroupItem value='today' id='option-one' />
+        <Label htmlFor='option-one'>Today</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='yesterday' id='option-two' />
+        <Label htmlFor='option-two'>Yesterday</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='thisWeek' id='option-two' />
+        <Label htmlFor='option-two'>This Week</Label>
+      </div>
+      <div className='flex items-center space-x-2'>
+        <RadioGroupItem value='lastWeek' id='option-two' />
+        <Label htmlFor='option-two'>Last Week</Label>
       </div>
     </RadioGroup>
+  );
+};
+
+let Locality = () => {
+  return (
+    <div>
+      <Input type='location' placeholder='Search' />
+    </div>
   );
 };
 
@@ -218,20 +244,42 @@ export default function Home() {
   const [viewIs, setView] = useState('table');
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
-  const uniqueLocality = [...new Set(data.map((item) => item.locality))];
+  const [sorting, setSorting] = useState([]);
+
+  const [openLoc, setOpenLoc] = useState(false);
+  const [valueLoc, setValueLoc] = useState('');
 
   const table = useReactTable({
     data: data,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    state: {
+      sorting,
+    },
     initialState: {
       pagination: {
         pageIndex: 0, //custom initial page index
         pageSize: 10, //custom default page size
       },
+      columnVisibility: {
+        gender: false,
+        locality: false,
+
+        qualification_label: false,
+      },
     },
   });
+
+  const fLocality = Array.from(
+    table.getColumn('locality').getFacetedUniqueValues().keys()
+  )
+    .sort()
+    .slice(0, 500);
 
   return (
     <div className='grid overflow-hidden lg:grid-cols-12 h-[calc(100vh-80px)]'>
@@ -240,21 +288,33 @@ export default function Home() {
           <div className='flex items-center justify-between'>
             <div className='mb-3 text-xl font-medium '>Filter</div>
           </div>
-          <FilterHead
-            tittle={'Last Active'}
-            filters={<RadioButtonField />}
-            open
-          />
 
-          <FilterHead tittle={'Locality'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Distance'} filters={<RadioButtonField />} />
+          <FilterHead tittle={'Last Active'} filters={<LastActive />} open />
+
+          <FilterHead tittle={'Locality'} filters={<Locality />} />
+          <FilterHead
+            tittle={'Distance'}
+            filters={
+              <div>
+                <Slider defaultValue={[33]} max={100} step={1} />
+                <div className='flex items-center justify-between mt-3 text-muted-foreground '>
+                  <div>
+                    Hire Within
+                    </div>
+                    <div>
+                      2km
+                    </div>
+
+                  </div>
+              </div>
+            }
+          />
           <FilterHead tittle={'Gender'} filters={<GenderField />} />
           <FilterHead
             tittle={'Min Qualification'}
             filters={<QualificationField />}
           />
-          <FilterHead tittle={'Experience'} filters={<RadioButtonField />} />
-          <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
+         
         </div>
       </div>
 
@@ -522,29 +582,28 @@ export default function Home() {
             </div>
           </section>
           <div className='flex items-center justify-start mx-6 mt-6 w-fit'>
-          <Pagination
-                  className={' flex items-center justify-start w-fit'}>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <Button
-                        variant='outline'
-                        size='sm'
-                        onClick={() => table.previousPage()}
-                        disabled={!table.getCanPreviousPage()}>
-                        <ChevronLeftIcon /> Previous
-                      </Button>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <Button
-                        variant='outline'
-                        size='sm'
-                        onClick={() => table.nextPage()}
-                        disabled={!table.getCanNextPage()}>
-                        <ChevronRightIcon /> Next
-                      </Button>
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
+            <Pagination className={' flex items-center justify-start w-fit'}>
+              <PaginationContent>
+                <PaginationItem>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={() => table.previousPage()}
+                    disabled={!table.getCanPreviousPage()}>
+                    <ChevronLeftIcon /> Previous
+                  </Button>
+                </PaginationItem>
+                <PaginationItem>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={() => table.nextPage()}
+                    disabled={!table.getCanNextPage()}>
+                    <ChevronRightIcon /> Next
+                  </Button>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
           <DrawerContent>
             <DrawerHeader>
@@ -553,30 +612,19 @@ export default function Home() {
             <ScrollArea className='px-3  h-[70vh] space-y-3 '>
               <FilterHead
                 tittle={'Last Active'}
-                filters={<RadioButtonField />}
+                filters={<div>One</div>}
                 open
               />
 
-              <FilterHead
-                tittle={'Locality'}
-                filters={<RadioButtonField />}
-                open
-              />
-              <FilterHead
-                tittle={'Distance'}
-                filters={<RadioButtonField />}
-                open
-              />
+              <FilterHead tittle={'Locality'} filters={<div>One</div>} open />
+              <FilterHead tittle={'Distance'} filters={<div>One</div>} open />
               <FilterHead tittle={'Gender'} filters={<GenderField />} open />
               <FilterHead
                 tittle={'Min Qualification'}
                 filters={<QualificationField />}
               />
-              <FilterHead
-                tittle={'Experience'}
-                filters={<RadioButtonField />}
-              />
-              <FilterHead tittle={'Salary'} filters={<RadioButtonField />} />
+              <FilterHead tittle={'Experience'} filters={<div>One</div>} />
+              <FilterHead tittle={'Salary'} filters={<div>One</div>} />
             </ScrollArea>
           </DrawerContent>
         </Drawer>
