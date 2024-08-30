@@ -28,7 +28,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 import {
   Check,
@@ -397,7 +397,7 @@ export default function Home() {
             {viewIs == 'table' ? (
               <div className='border rounded-xl'>
                 <Table>
-                  <TableHeader className=''>
+                  <TableHeader className=' bg-muted'>
                     {table.getHeaderGroups().map((headerGroup) => (
                       <TableRow key={headerGroup.id}>
                         {headerGroup.headers.map((header) => {
@@ -483,6 +483,7 @@ export default function Home() {
               </div>
             )}
           </section>
+
           <section className='block mx-3 md:hidden'>
             <div className='space-y-6 '>
               {table.getRowModel().rows?.length ? (
@@ -520,6 +521,31 @@ export default function Home() {
               )}
             </div>
           </section>
+          <div className='flex items-center justify-start mx-6 mt-6 w-fit'>
+          <Pagination
+                  className={' flex items-center justify-start w-fit'}>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => table.previousPage()}
+                        disabled={!table.getCanPreviousPage()}>
+                        <ChevronLeftIcon /> Previous
+                      </Button>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <Button
+                        variant='outline'
+                        size='sm'
+                        onClick={() => table.nextPage()}
+                        disabled={!table.getCanNextPage()}>
+                        <ChevronRightIcon /> Next
+                      </Button>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+          </div>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Filter</DrawerTitle>
@@ -531,9 +557,17 @@ export default function Home() {
                 open
               />
 
-              <FilterHead tittle={'Locality'} filters={<RadioButtonField />} open/>
-              <FilterHead tittle={'Distance'} filters={<RadioButtonField />}open />
-              <FilterHead tittle={'Gender'} filters={<GenderField />} open/>
+              <FilterHead
+                tittle={'Locality'}
+                filters={<RadioButtonField />}
+                open
+              />
+              <FilterHead
+                tittle={'Distance'}
+                filters={<RadioButtonField />}
+                open
+              />
+              <FilterHead tittle={'Gender'} filters={<GenderField />} open />
               <FilterHead
                 tittle={'Min Qualification'}
                 filters={<QualificationField />}

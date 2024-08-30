@@ -26,8 +26,8 @@ let MinimalNavBar = ({title,description})=>{
           </div>
 
           <div className='flex items-center gap-2 px-3 py-2 pr-3 mr-6 border rounded-full'>
-            <GemIcon size={16} />
-            <div>100 Left</div>
+            <GemIcon size={16} className='text-indigo-600 ' />
+            <div className='text-sm font-medium text-muted-foreground '>100 Left</div>
           </div>
         </div>
 

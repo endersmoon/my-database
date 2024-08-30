@@ -38,7 +38,7 @@ let Tupple = ({
               <User2Icon />
             </div>
             <div>
-              <div className='text-2xl font-medium '>{name}</div>
+              <div className='text-lg font-medium  md:text-2xl'>{name}</div>
               <div className='text-sm text-muted-foreground'>
                 {gender} · {age}
               </div>
