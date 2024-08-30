@@ -1,4 +1,4 @@
-const {
+import {
   IndianRupeeIcon,
   User2Icon,
   GraduationCapIcon,
@@ -10,10 +10,12 @@ const {
   FileIcon,
   LockIcon,
   CoinsIcon,
-} = require('lucide-react');
+} from'lucide-react'
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+
+import { useState } from 'react';
 
 let Tupple = ({
   name,
@@ -33,6 +35,10 @@ let Tupple = ({
     style: 'currency',
     currency: 'INR',
   }).format(salary);
+  
+
+
+  const [lck, setUnlock ] = useState(true)
   return (
     <div className=' border min-h-[80px] bg-background rounded-2xl py-3'>
       <div className='flex items-center justify-between px-3 pb-4 border-b '>
@@ -138,28 +144,31 @@ let Tupple = ({
             <em className='not-italic text-green-500 '> 2.31</em>
           </Button>
 
-          <Button variant='outline' disabled size='sm'>
+          <Button variant='outline' disabled={lck} size='sm'>
             <CalendarIcon size={16} className='mr-2' /> Invite
           </Button>
         </div>
         <div className='flex items-center gap-2 pr-3 '>
-          <Button variant='outline' disabled size='sm'>
+          <Button variant='outline'disabled={lck} size='sm'>
             <FileIcon size={16} className='md:mr-2' />
             <div className='hidden md:block'>View Resume</div>
           </Button>
           <Button
-            disabled={unlocked ? false : true}
-            className='bg-blue-600 hover:bg-blue-700'
+          variant="outline"
+            disabled={lck}
+            
             size='sm'>
             <HeadsetIcon size={16} className='md:mr-2' />
             <div className='hidden md:block'>Call</div>
           </Button>
-          {unlocked ? null : (
-            <Button className='bg-blue-600 hover:bg-blue-700' size='sm'>
+          {lck ?  (
+            <Button className='bg-blue-600 hover:bg-blue-700' size='sm' onClick={()=>{
+              setUnlock(false)
+            }}>
               <LockIcon size={16} className='mr-2' />
               Unlock
             </Button>
-          )}
+          ):null}
         </div>
       </div>
     </div>

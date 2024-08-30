@@ -6,31 +6,40 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { MoreHorizontalIcon, PhoneIcon, UnlockIcon,ArrowUpDown, VoicemailIcon, MicIcon, FileIcon, MessageCircleIcon } from 'lucide-react';
-import Image from "next/image";
-import { Checkbox } from "@/components/ui/checkbox"
+import {
+  MoreHorizontalIcon,
+  PhoneIcon,
+  UnlockIcon,
+  ArrowUpDown,
+  VoicemailIcon,
+  MicIcon,
+  FileIcon,
+  MessageCircleIcon,
+} from 'lucide-react';
+import Image from 'next/image';
+import { Checkbox } from '@/components/ui/checkbox';
 
-
+import { useState } from 'react';
 const columns = [
   {
-    id: "select",
+    id: 'select',
     header: ({ table }) => (
       <Checkbox
         checked={
           table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label='Select all'
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label='Select row'
       />
     ),
     enableSorting: false,
@@ -39,11 +48,15 @@ const columns = [
   {
     header: 'Avatar',
     cell: ({ row }) => {
-      
-
       return (
         <div>
-         <Image alt={row.original.first_name} className="" width={60} height={60} src={row.original.gender =="male"? "/man.png":"/lady.png"} />
+          <Image
+            alt={row.original.first_name}
+            className=''
+            width={60}
+            height={60}
+            src={row.original.gender == 'male' ? '/man.png' : '/lady.png'}
+          />
         </div>
       );
     },
@@ -67,14 +80,10 @@ const columns = [
             {candidate.first_name} {candidate.last_name}
           </div>
           <div className=' text-muted-foreground'>
-            {randomIntFromInterval(25, 44)} · {cap(candidate.gender)} · {candidate.qualification_label}
-            
+            {randomIntFromInterval(25, 44)} · {cap(candidate.gender)} ·{' '}
+            {candidate.qualification_label}
           </div>
-          <div className='mt-2 text-muted-foreground'>
-            {candidate.locality} 
-            
-          </div>
-
+          <div className=' text-muted-foreground'>{candidate.locality}</div>
         </div>
       );
     },
@@ -142,7 +151,9 @@ const columns = [
 
       let j = l > 2 ? l - 2 : null;
       return (
-        <ul key={row.original.id} className='flex flex-wrap items-center gap-2 max-w-[200px]'>
+        <ul
+          key={row.original.id}
+          className='flex flex-wrap items-center gap-2 max-w-[200px]'>
           {skills.slice(0, 2).map((skill, index) => {
             return (
               <li
@@ -166,7 +177,9 @@ const columns = [
       let l = assets.length;
       let j = l > 2 ? l - 2 : null;
       return (
-        <ul key={row.original.id} className='flex flex-wrap items-center gap-2 max-w-[160px]'>
+        <ul
+          key={row.original.id}
+          className='flex flex-wrap items-center gap-2 max-w-[160px]'>
           {assets.slice(0, 2).map((asset, index) => {
             return (
               <li
@@ -186,27 +199,49 @@ const columns = [
   {
     header: 'Actions',
     cell: ({ row }) => {
+      const [lck, setUnlock] = useState(true);
       return (
         <div className='flex items-center gap-2 '>
-          <Button  variant='outline' >
-            
-            <UnlockIcon size={16} className="mr-2" /> Unlock
-          </Button>
+          {lck ? (
+            <Button className="min-w-[120px]" variant='outline' onClick={()=>{
+              setUnlock(false)
+            }}>
+              <UnlockIcon size={16} className='mr-2' /> Unlock
+            </Button>
+          ) : (
+            <Button className="min-w-[120px]" variant='outline'>
+              <PhoneIcon size={16} className='mr-2' />
+              Call
+            </Button>
+          )}
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button size='icon' variant='outline'>
-                
                 <MoreHorizontalIcon size={16} />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>Quick Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem> <MicIcon size={16} className="mr-2" /> Audio Intro</DropdownMenuItem>
-              <DropdownMenuItem disabled> <FileIcon  size={16} className="mr-2" /> Resume</DropdownMenuItem>
+              <DropdownMenuItem>
+                {' '}
+                <MicIcon size={16} className='mr-2' /> Audio Intro
+              </DropdownMenuItem>
+              <DropdownMenuItem disabled={lck}>
+                {' '}
+                <FileIcon size={16} className='mr-2' /> Resume
+              </DropdownMenuItem>
+              {
+                lck?<DropdownMenuItem disabled={lck}>
+                <PhoneIcon size={16} className='mr-2' />
+                Call
+              </DropdownMenuItem>:null
+              }
               
-              <DropdownMenuItem disabled><PhoneIcon  size={16} className="mr-2" />Call</DropdownMenuItem>
-              <DropdownMenuItem disabled> <MessageCircleIcon  size={16} className="mr-2" /> Message</DropdownMenuItem>
+              <DropdownMenuItem disabled={lck}>
+                {' '}
+                <MessageCircleIcon size={16} className='mr-2' /> Message
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
