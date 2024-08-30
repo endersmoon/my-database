@@ -43,7 +43,7 @@ const columns = [
 
       return (
         <div>
-         <Image className="" width={60} height={60} src={row.original.gender =="male"? "/man.png":"/lady.png"} />
+         <Image alt={row.original.first_name} className="" width={60} height={60} src={row.original.gender =="male"? "/man.png":"/lady.png"} />
         </div>
       );
     },

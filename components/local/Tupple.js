@@ -13,6 +13,7 @@ const {
 } = require('lucide-react');
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 let Tupple = ({
   name,
@@ -28,24 +29,25 @@ let Tupple = ({
   unlocked,
 }) => {
 
-  
+  const formatted = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+  }).format(salary);
   return (
     <div className=' border min-h-[80px] bg-background rounded-2xl py-3'>
-      <div className='flex items-start justify-between px-3 pb-4 border-b '>
+      <div className='flex items-center justify-between px-3 pb-4 border-b '>
         <div className=''>
-          <div className='flex gap-2 '>
-            <div className='flex items-center justify-center text-blue-400 rounded-xl bg-muted size-12'>
-              <User2Icon />
-            </div>
+          <div className='flex items-center gap-2 '>
+          <div>
+         <Image alt={name} className="" width={60} height={60} src={gender =="male" ? "/man.png" :"/lady.png" } />
+        </div>
             <div>
-              <div className='text-lg font-medium  md:text-2xl'>{name}</div>
+              <div className='text-lg font-medium md:text-xl'>{name}</div>
               <div className='text-sm text-muted-foreground'>
                 {gender} · {age}
               </div>
             </div>
           </div>
-
-          
         </div>
 
         <div className='pr-3'>
@@ -55,39 +57,39 @@ let Tupple = ({
         </div>
       </div>
       <div className='grid grid-cols-2 gap-4 p-3 border-b lg:gap-8 lg:flex lg:items-center text-muted-foreground '>
-            <div className='flex items-center gap-2 '>
-              <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
-              <MapPinIcon size={18} className='text-teal-600 ' />
-              </div>
-            
-              <div className='text-sm lg:text-base'>{location}</div>
-            </div>
-            <div className='flex items-center gap-2 '>
-            <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
-              <CoinsIcon size={18} className='text-teal-600 ' />
-              </div>
-              <div className='text-sm lg:text-base'>{salary}</div>
-            </div>
-
-            <div className='flex items-center gap-2 '>
-            <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
-              
-              <LanguagesIcon size={18} className='text-teal-600 ' />
-              </div>
-              <div className='text-sm lg:text-base'>{language}</div>
-            </div>
-            <div className='flex items-center gap-2 '>
-            <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
-              <GraduationCapIcon size={18} className='text-teal-600' />
-              </div>
-              <div className='text-sm lg:text-base ordinal'>{education}</div>
-            </div>
+        <div className='flex items-center gap-2 '>
+          <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+            <MapPinIcon size={18} className='text-teal-600 ' />
           </div>
+
+          <div className='text-sm lg:text-base'>{location}</div>
+        </div>
+        
+        <div className='flex items-center gap-2 '>
+          <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+            <CoinsIcon size={18} className='text-teal-600 ' />
+          </div>
+          <div className='text-sm lg:text-base'>{salary?formatted:NA}</div>
+        </div>
+
+        <div className='flex items-center gap-2 '>
+          <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+            <LanguagesIcon size={18} className='text-teal-600 ' />
+          </div>
+          <div className='text-sm lg:text-base'>{language}</div>
+        </div>
+        <div className='flex items-center gap-2 '>
+          <div className='flex items-center justify-center rounded-full bg-teal-50 size-8'>
+            <GraduationCapIcon size={18} className='text-teal-600' />
+          </div>
+          <div className='text-sm lg:text-base ordinal'>{education}</div>
+        </div>
+      </div>
       <div className='grid grid-cols-1 gap-4 px-3 pb-6 mt-6 border-b md:grid-cols-2'>
         <div className='md:border-r '>
           <div className='text-sm text-muted-foreground '>SKILLS</div>
           <ul className='flex items-center gap-2 mt-3 '>
-            {skill.slice(0,3)?.map((s,index) => {
+            {skill.slice(0, 3)?.map((s, index) => {
               return (
                 <li key={index}>
                   <Badge
@@ -101,23 +103,24 @@ let Tupple = ({
           </ul>
         </div>
 
-      
-        <div>
-          <div className='text-sm text-muted-foreground '>ASSETS & DOCS</div>
-          <ul className='flex items-center gap-2 mt-3 '>
-            {assetsDcos.slice(0,3)?.map((a,index) => {
-              return (
-                <li key={index}>
-                  <Badge
-                    variant='outline'
-                    className={'bg-muted rounded-sm font-normal'}>
-                    {a}
-                  </Badge>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        {assetsDcos.length > 0 ? (
+          <div>
+            <div className='text-sm text-muted-foreground '>ASSETS & DOCS</div>
+            <ul className='flex items-center gap-2 mt-3 '>
+              {assetsDcos.slice(0, 3)?.map((a, index) => {
+                return (
+                  <li key={index}>
+                    <Badge
+                      variant='outline'
+                      className={'bg-muted rounded-sm font-normal'}>
+                      {a}
+                    </Badge>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
       <div className='flex items-center justify-between py-3 mt-3'>
@@ -134,25 +137,29 @@ let Tupple = ({
             <PlayIcon size={16} className='mr-2' /> Audio ·
             <em className='not-italic text-green-500 '> 2.31</em>
           </Button>
-          
-          <Button  variant="outline" disabled size='sm'>
+
+          <Button variant='outline' disabled size='sm'>
             <CalendarIcon size={16} className='mr-2' /> Invite
           </Button>
         </div>
         <div className='flex items-center gap-2 pr-3 '>
-          <Button variant="outline" disabled size='sm'>
+          <Button variant='outline' disabled size='sm'>
             <FileIcon size={16} className='md:mr-2' />
-            <div className='hidden md:block'>View Resume</div> 
+            <div className='hidden md:block'>View Resume</div>
           </Button>
-          <Button disabled={unlocked? false: true} className='bg-blue-600 hover:bg-blue-700' size='sm'>
-            <HeadsetIcon size={16} className='md:mr-2' /><div className='hidden md:block'>Call
-              </div> 
+          <Button
+            disabled={unlocked ? false : true}
+            className='bg-blue-600 hover:bg-blue-700'
+            size='sm'>
+            <HeadsetIcon size={16} className='md:mr-2' />
+            <div className='hidden md:block'>Call</div>
           </Button>
-          {unlocked? null : <Button className='bg-blue-600 hover:bg-blue-700' size='sm'>
-            <LockIcon size={16} className='mr-2' />
-            Unlock
-          </Button>}
-         
+          {unlocked ? null : (
+            <Button className='bg-blue-600 hover:bg-blue-700' size='sm'>
+              <LockIcon size={16} className='mr-2' />
+              Unlock
+            </Button>
+          )}
         </div>
       </div>
     </div>
