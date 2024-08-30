@@ -27,6 +27,7 @@ import {
   ChevronsRightIcon,
   ChevronRightIcon,
   ChevronLeftIcon,
+  GemIcon,
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
@@ -199,6 +200,10 @@ let QualificationField = () => {
     </RadioGroup>
   );
 };
+
+
+
+
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
@@ -219,6 +224,8 @@ export default function Home() {
 
   return (
     <div className='grid overflow-hidden lg:grid-cols-8 h-[calc(100vh-80px)]'>
+
+      
       <div className='hidden p-6 overflow-scroll lg:col-span-2 lg:block'>
         <div className='w-full py-3 space-y-4 min-h-20 '>
           <div className='flex items-center justify-between'>
@@ -242,17 +249,25 @@ export default function Home() {
           <FilterHead tittle={'Last Active'} filters={<RadioButtonField />} />
         </div>
       </div>
-      <div className='col-span-1 p-6 overflow-scroll border-l lg:col-span-6'>
-        <section className='mb-6'>
-          <h1 className='mb-3 text-xl font-semibold'>500 Candidates</h1>
-          <Tabs defaultValue='account' className='w-[400px]'>
+
+
+      <div className='relative col-span-1 pb-6 overflow-scroll border-l lg:col-span-6' >
+        <section className='sticky top-0 z-10 flex items-center justify-between pt-3 pb-3 mb-6 border-b bg-background'>
+         
+          <Tabs defaultValue='account' className='w-[400px] pl-3'>
             <TabsList>
-              <TabsTrigger value='account'>All</TabsTrigger>
-              <TabsTrigger value='password'>Unlocked</TabsTrigger>
+              <TabsTrigger value='account'>All (500)</TabsTrigger>
+              <TabsTrigger value='password'>Unlocked(0)</TabsTrigger>
             </TabsList>
           </Tabs>
+
+          <div className='flex items-center gap-2 px-3 py-2 pr-3 border rounded-full'>
+            <GemIcon size={16} />
+            <div>100 Left</div>
+          </div>
         </section>
-        <section className='flex items-center justify-between gap-3 mb-6'>
+
+        <section className='flex items-center justify-between gap-3 px-6 mb-6'>
           <div className='flex items-center gap-2 '>
             <div className='pr-3 border-r '>
               <Button variant='outline' size='sm'>
@@ -350,7 +365,7 @@ export default function Home() {
             </Select>
           </div>
         </section>
-        <section className='space-y-6 '>
+        <section className='px-6 space-y-6 '>
           <div className='border rounded-xl'>
             <Table>
               <TableHeader>
