@@ -27,6 +27,8 @@ let Tupple = ({
   assetsDcos,
   unlocked,
 }) => {
+
+  
   return (
     <div className=' border min-h-[80px] bg-background rounded-2xl py-3'>
       <div className='flex items-start justify-between px-3 pb-4 border-b '>
@@ -81,11 +83,11 @@ let Tupple = ({
               <div className='text-sm lg:text-base ordinal'>{education}</div>
             </div>
           </div>
-      <div className='grid grid-cols-1 gap-4 px-3 pb-6 mt-6 border-b md:grid-cols-3'>
+      <div className='grid grid-cols-1 gap-4 px-3 pb-6 mt-6 border-b md:grid-cols-2'>
         <div className='md:border-r '>
           <div className='text-sm text-muted-foreground '>SKILLS</div>
           <ul className='flex items-center gap-2 mt-3 '>
-            {skill?.map((s,index) => {
+            {skill.slice(0,3)?.map((s,index) => {
               return (
                 <li key={index}>
                   <Badge
@@ -99,26 +101,11 @@ let Tupple = ({
           </ul>
         </div>
 
-        <div className='md:border-r '>
-          <div className='text-sm text-muted-foreground '>EXPERIENCE</div>
-          <ul className='flex items-center gap-2 mt-3 '>
-            {experience?.map((e,index) => {
-              return (
-                <li key={index}>
-                  <Badge
-                    variant='outline'
-                    className={'bg-muted rounded-sm font-normal'}>
-                    {e}
-                  </Badge>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+      
         <div>
           <div className='text-sm text-muted-foreground '>ASSETS & DOCS</div>
           <ul className='flex items-center gap-2 mt-3 '>
-            {assetsDcos?.map((a,index) => {
+            {assetsDcos.slice(0,3)?.map((a,index) => {
               return (
                 <li key={index}>
                   <Badge
